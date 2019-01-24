@@ -2,7 +2,7 @@ import React from 'react'
 
 import { ListBox } from './styles'
 
-const SymbolList = () => (
+const SymbolList = ({ wishlist }) => (
   <ListBox>
     <div className="symbol__list" />
   </ListBox>

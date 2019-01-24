@@ -21,7 +21,7 @@ export const DetailBox = styled.div`
     content: '';
     position: absolute;
     width: calc(100% - 32px);
-    background: #ff333a;
+    background: ${props => (props.symbolUp ? '#1ecd93' : '#ff333a')};
     height: 8px;
     display: block;
     top: 16px;
@@ -52,19 +52,13 @@ export const DetailBox = styled.div`
           display: flex;
           align-items: center;
           margin-left: 8px;
-        }
-
-        & span.stats__change {
+          color: ${props => (props.symbolUp ? '#1ecd93' : '#ff333a')};
           font-size: 18px;
-          color: #ff433d;
           font-weight: 400;
-        }
 
-        & span.stats__change-percent {
-          font-size: 18px;
-          color: #ff433d;
-          font-weight: 400;
-          margin-left: 5px;
+          &__change-percent {
+            margin-left: 5px;
+          }
         }
       }
 
