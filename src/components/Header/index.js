@@ -16,7 +16,9 @@ class Header extends Component {
     e.preventDefault()
 
     if (this.state.symbolInput !== '') {
-      this.props.addRequest(this.state.symbolInput)
+      this.props.request(this.state.symbolInput)
+
+      this.setState({ symbolInput: '' })
     }
   }
 
@@ -28,6 +30,7 @@ class Header extends Component {
             <input
               type="text"
               name="search"
+              value={this.state.symbolInput}
               placeholder="Search for symbols"
               onChange={e => this.setState({ symbolInput: e.target.value })}
             />

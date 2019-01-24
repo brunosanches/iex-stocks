@@ -2,8 +2,9 @@
  * Types
  */
 export const Types = {
-  ADD_REQUEST: 'symbols/ADD_REQUEST',
-  ADD_SUCCESS: 'symbols/ADD_SUCCESS',
+  REQUEST: 'symbols/REQUEST',
+  ADD_SYMBOL: 'symbols/ADD_SYMBOL',
+  ADD_WISHLIST: 'symbols/ADD_WISHLIST',
   ADD_FAILURE: 'symbols/ADD_FAILURE'
 }
 
@@ -11,17 +12,23 @@ export const Types = {
  * Reducers
  */
 const INITIAL_STATE = {
-  data: []
+  wishlist: [],
+  symbol: {}
 }
 
 export default function symbols (state = INITIAL_STATE, action) {
   switch (action.type) {
-    case Types.ADD_REQUEST:
+    case Types.REQUEST:
       return { ...state }
-    case Types.ADD_SUCCESS:
+    case Types.ADD_SYMBOL:
       return {
         ...state,
-        data: [...state.data, action.payload.data]
+        symbol: action.payload.symbol
+      }
+    case Types.ADD_WISHLIST:
+      return {
+        ...state,
+        wishlist: [...state.wishlist, action.payload.symbol]
       }
     default:
       return state
@@ -32,13 +39,18 @@ export default function symbols (state = INITIAL_STATE, action) {
  * Actoins
  */
 export const Creators = {
-  addRequest: symbol => ({
-    type: Types.ADD_REQUEST,
+  request: symbolSearch => ({
+    type: Types.REQUEST,
+    payload: { symbolSearch }
+  }),
+
+  addSymbol: symbol => ({
+    type: Types.ADD_SYMBOL,
     payload: { symbol }
   }),
 
-  addSuccess: data => ({
-    type: Types.ADD_SUCCESS,
-    payload: { data }
+  addWishList: symbol => ({
+    type: Types.ADD_SYMBOL,
+    payload: { symbol }
   })
 }

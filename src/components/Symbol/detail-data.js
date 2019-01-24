@@ -1,35 +1,38 @@
 import React, { Fragment } from 'react'
+import { connect } from 'react-redux'
 
-const Data = () => (
+const Data = ({ symbol }) => (
   <Fragment>
     <div className="symbol__data">
-      <p className="symbol__data--company-name">Apple Inc. (AAPL)</p>
+      <p className="symbol__data--company-name">{symbol.company.companyName}</p>
       <p className="symbol__data--primary-exchange">
-        Nasdaq Global Select. Currency in USD
+        {`${symbol.quote.primaryExchange}. Currency in USD`}
       </p>
       <div className="symbol__data--latest-price">
-        153.21
+        {symbol.quote.latestPrice}
         <div className="stats">
-          <span className="stats__change">-0.09</span>
-          <span className="stats__change-percent">(-0.00059)</span>
+          <span className="stats__change">{symbol.quote.change}</span>
+          <span className="stats__change-percent">
+            ({symbol.quote.changePercent})
+          </span>
         </div>
       </div>
-      <p className="symbol__data--latest-time">3:16:55 PM</p>
+      <p className="symbol__data--latest-time">{symbol.quote.latestTime}</p>
       <ul className="symbol__data--info-company">
         <li data-info-company="open">
-          Open: <span>154.03</span>
+          Open: <span>{symbol.quote.open}</span>
         </li>
         <li data-info-company="previous-close">
-          Previous Close: <span>153.3</span>
+          Previous Close: <span>{symbol.quote.close}</span>
         </li>
         <li data-info-company="high">
-          High: <span>155.14</span>
+          High: <span>{symbol.quote.high}</span>
         </li>
         <li data-info-company="low">
-          Low: <span>151.7</span>
+          Low: <span>{symbol.quote.low}</span>
         </li>
         <li data-info-company="low">
-          P/E Ratio: <span>12.97</span>
+          P/E Ratio: <span>{symbol.quote.peRatio}</span>
         </li>
       </ul>
     </div>
