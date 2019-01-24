@@ -42,7 +42,7 @@ export const Form = styled.form`
   right: 16px;
   position: absolute;
 
-  & input[type='search'] {
+  & input[type='text'] {
     background: #fff;
     border: none;
     border-top-left-radius: 2px;

@@ -4,7 +4,7 @@ import { ListBox } from './styles'
 
 const SymbolList = () => (
   <ListBox>
-    <div class="symbol__list" />
+    <div className="symbol__list" />
   </ListBox>
 )
 
