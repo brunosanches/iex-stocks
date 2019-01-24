@@ -1,0 +1,13 @@
+{
+  "parser": "babel-eslint",
+  "extends": "standard",
+  "env": {
+    "browser": true,
+    "jest": true
+  },
+  "plugins": ["react", "jsx-a11y", "import"],
+  "rules": {
+    "no-unused-vars": "off",
+    "generator-star-spacing": "off"
+  }
+}
