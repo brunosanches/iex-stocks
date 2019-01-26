@@ -1,9 +1,11 @@
 import React, { Fragment } from 'react'
 
-const News = () => (
+const News = ({ symbol }) => (
   <Fragment>
     <div className="symbol__news">
-      <h2>Last News</h2>
+      {symbol.news.map((notice, idx) => (
+        <p key={idx}>{notice.headline}</p>
+      ))}
     </div>
   </Fragment>
 )
