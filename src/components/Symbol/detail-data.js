@@ -1,12 +1,13 @@
 import React, { Fragment } from 'react'
-import { connect } from 'react-redux'
 
 const Data = ({ symbol }) => (
   <Fragment>
     <div className="symbol__data">
-      <p className="symbol__data--company-name">{symbol.company.companyName}</p>
+      <p className="symbol__data--company-name">
+        {symbol.company.companyName} ({symbol.company.symbol})
+      </p>
       <p className="symbol__data--primary-exchange">
-        {`${symbol.quote.primaryExchange}. Currency in USD`}
+        {`${symbol.company.exchange}. Currency in USD`}
       </p>
       <div className="symbol__data--latest-price">
         {symbol.quote.latestPrice}
