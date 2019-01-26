@@ -5,6 +5,39 @@ import api from '../../services/api'
 
 import { Creators as SymbolsActions } from '../ducks/symbols'
 
+export function* getSymbolsSupport (action) {
+  try {
+    let symbols = yield JSON.parse(
+      localStorage.getItem('@IEXStocks:symbolsEligible')
+    ) || []
+
+    if (symbols.length === 0) {
+      // Call API iextrading
+      const { data } = yield call(api.get, `ref-data/symbols`)
+
+      symbols = {
+        date: moment().format('MMDDYYYY'),
+        data: data.filter(symbol => symbol.isEnabled)
+      }
+    } else {
+      if (symbols.date !== moment().format('MMDDYYYY')) {
+        // Call API iextrading
+        const { data } = yield call(api.get, `ref-data/symbols`)
+
+        symbols = {
+          date: moment().format('MMDDYYYY'),
+          data: data.filter(symbol => symbol.isEnabled)
+        }
+      }
+    }
+
+    localStorage.setItem('@IEXStocks:symbolsEligible', JSON.stringify(symbols))
+    yield put(SymbolsActions.addSymbolsSupport(symbols))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 export function* getSymbol (action) {
   try {
     let symbol = {}
@@ -212,6 +245,57 @@ export function* getSymbol (action) {
 
     // call reducer addSymbol
     yield put(SymbolsActions.addSymbol(symbol)) */
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export function* getSymbolsMarquee (action) {
+  try {
+    /* let symbols = yield JSON.parse(
+      localStorage.getItem('@IEXStocks:symbolsMarquee')
+    ) || []
+
+    if (symbols.length === 0) {
+      // Call API iextrading
+      const { data } = yield call(
+        api.get,
+        `stock/market/collection/list?collectionName=infocus&range=1`
+      )
+
+      symbols = {
+        date: moment().format('MMDDYYYY'),
+        data
+      }
+    } else {
+      if (symbols.date !== moment().format('MMDDYYYY')) {
+        // Call API iextrading
+        const { data } = yield call(
+          api.get,
+          `stock/market/collection/list?collectionName=infocus&range=1`
+        )
+
+        symbols = {
+          date: moment().format('MMDDYYYY'),
+          data
+        }
+      }
+    }
+
+    localStorage.setItem('@IEXStocks:symbolsMarquee', JSON.stringify(symbols)) */
+
+    // Call API iextrading
+    const { data } = yield call(
+      api.get,
+      `stock/market/collection/list?collectionName=infocus&range=1`
+    )
+
+    const symbols = {
+      date: moment().format('MMDDYYYY'),
+      data
+    }
+
+    yield put(SymbolsActions.addSymbolsMarquee(symbols))
   } catch (error) {
     console.error(error)
   }
