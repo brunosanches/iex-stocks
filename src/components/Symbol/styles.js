@@ -82,6 +82,30 @@ export const DetailBox = styled.div`
     &__data {
       flex-basis: 33%;
       min-width: 320px;
+      position: relative;
+
+      & p {
+        margin-bottom: 8px;
+      }
+
+      .add-wishlist {
+        cursor: pointer;
+        border: 1px solid #673ab7;
+        background: transparent;
+        border-radius: 3px;
+        position: absolute;
+        right: 0;
+        top: 61px;
+        padding: 5px 10px;
+        font-size: 12px;
+        color: #673ab7;
+        font-weight: 700;
+
+        &:hover {
+          background: #673ab7;
+          color: #fff;
+        }
+      }
 
       &--company-name {
         font-weight: 700;
@@ -98,6 +122,7 @@ export const DetailBox = styled.div`
         font-size: 36px;
         font-weight: 700;
         display: flex;
+        align-items: center;
 
         & .stats {
           display: flex;
@@ -106,6 +131,7 @@ export const DetailBox = styled.div`
           color: ${props => (props.symbolUp ? '#1ecd93' : '#ff333a')};
           font-size: 18px;
           font-weight: 400;
+          flex: 1;
 
           &__change-percent {
             margin-left: 5px;
@@ -144,8 +170,30 @@ export const DetailBox = styled.div`
       flex: 1;
       background: #efefef;
       border-radius: 2px;
-      padding: 16px;
+      padding-top: 16px;
+      padding-right: 16px;
       margin-left: 16px;
+
+      .error {
+      }
+
+      g.recharts-cartesian-axis-ticks {
+        font-size: 10px;
+      }
+
+      & .area-chart-tooltip {
+        background: #f2f2f2;
+        box-shadow: 2px 2px 2px -1px #000;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 18px;
+        padding: 8px;
+        min-width: 100px;
+
+        & hr {
+          margin: 3px 0;
+        }
+      }
     }
 
     &__news {

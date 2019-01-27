@@ -66,10 +66,15 @@ class Autocomplete extends Component {
 
     // User pressed the enter key
     if (e.keyCode === 13) {
+      let selectInput =
+        filteredSuggestions[activeSuggestion] === undefined
+          ? this.state.symbolInput
+          : filteredSuggestions[activeSuggestion].symbol
+
       this.setState({
         activeSuggestion: 0,
         showSuggestions: false,
-        symbolInput: filteredSuggestions[activeSuggestion].symbol
+        symbolInput: selectInput
       })
     } else if (e.keyCode === 38) {
       // User pressed the up arrow

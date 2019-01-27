@@ -20,13 +20,14 @@ export const AutocompleteBox = styled.div`
     list-style: none;
     margin-top: 0;
     width: 100%;
-    max-height: 220px;
+    max-height: 240px;
     overflow-y: auto;
     padding-left: 0;
     position: absolute;
     z-index: 1;
-    background: #fff;
+    background: #f5f5f5;
     top: 33px;
+    font-size: 14px;
   }
 
   .suggestions li {
@@ -43,7 +44,7 @@ export const AutocompleteBox = styled.div`
   }
 
   .suggestions li:not(:last-of-type) {
-    border-bottom: 1px solid #999;
+    border-bottom: 1px solid #673ab7;
   }
 `
 

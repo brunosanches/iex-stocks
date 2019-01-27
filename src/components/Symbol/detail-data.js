@@ -3,6 +3,7 @@ import React, { Fragment } from 'react'
 const Data = ({ symbol }) => (
   <Fragment>
     <div className="symbol__data">
+      <button className="add-wishlist">Add Wishlist</button>
       <p className="symbol__data--company-name">
         {symbol.company.companyName} ({symbol.company.symbol})
       </p>

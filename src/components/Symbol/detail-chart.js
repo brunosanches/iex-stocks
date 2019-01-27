@@ -16,14 +16,13 @@ const Chart = ({ symbol }) => (
   <Fragment>
     <div className="symbol__chart">
       {symbol.error.status && symbol.error.orign === 'chart' ? (
-        <p>{symbol.error.message}</p>
+        <p className="error">{symbol.error.message}</p>
       ) : (
         <ResponsiveContainer>
           <AreaChart
             data={symbol.chart.data}
-            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+            margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
           >
-            <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="label" ticks={symbol.chart.symbolsChartTime} />
             <YAxis
               domain={['dataMin', 'dataMax']}

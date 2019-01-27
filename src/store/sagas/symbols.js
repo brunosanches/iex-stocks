@@ -56,6 +56,8 @@ export function* getSymbol (action) {
       }/batch?types=quote,company,news,chart&range=1d`
     )
 
+    console.log(chart)
+
     // Continue only if latestPrice exists
     if (!data.quote.latestPrice) {
       isError = {
@@ -94,6 +96,8 @@ export function* getSymbol (action) {
         ...new Set(symbolsChartClose.map(chart => chart.close.toFixed(2)))
       ].sort()
 
+      console.log(chart)
+
       // Generates "chart" object only if symbolsChartTime or symbolsChartClose exists
       if (symbolsChartTime.length === 0 || symbolsChartClose.length === 0) {
         isError = {
@@ -105,25 +109,15 @@ export function* getSymbol (action) {
         }
       } else {
         // data used in the graph
-        let chartsData = ''
-        chart = data.chart.map(chart => {
-          if (
+        chart = data.chart.filter(chart => {
+          return (
             chart.label &&
-            chart.high &&
-            chart.low &&
-            chart.open &&
-            chart.close
-          ) {
-            chartsData = {
-              label: chart.label,
-              high: chart.high.toFixed(2),
-              low: chart.low.toFixed(2),
-              open: chart.open.toFixed(2),
-              close: chart.close.toFixed(2)
-            }
-          }
-
-          return chartsData
+            chart.label !== '' &&
+            (chart.high && chart.high !== '') &&
+            (chart.low && chart.low !== '') &&
+            (chart.open && chart.open !== '') &&
+            (chart.close && chart.close !== '')
+          )
         })
       }
 
