@@ -22,9 +22,8 @@ class Main extends Component {
       <Fragment>
         <Header />
         <Container>
-          <Wishlist symbol={symbols.wishlist} />
           {Array.from(symbols.wishlist).length > 0 ? (
-            <Wishlist symbol={symbols.wishlist} />
+            <Wishlist wishlist={symbols.wishlist} />
           ) : null}
 
           {Object.keys(symbols.symbol).length > 0 ? (

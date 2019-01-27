@@ -15,7 +15,7 @@ class Header extends Component {
       <HeaderBox>
         {this.props.symbols.symbolsEligible ? <Autocomplete /> : null}
         <Container>
-          {this.props.symbols.symbolsMarquee.data ? <Marquee /> : null}
+          {this.props.symbols.symbolsMarquee.length > 0 ? <Marquee /> : null}
         </Container>
       </HeaderBox>
     )

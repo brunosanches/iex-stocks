@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const HeaderBox = styled.header`
-  height: 115px;
+  height: 142px;
   margin-bottom: 16px;
 
   & .header {

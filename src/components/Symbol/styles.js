@@ -1,11 +1,62 @@
 import styled from 'styled-components'
 
+export const SimpleBox = styled.div`
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px;
+  background: #f5f5f5;
+  border-radius: 3px;
+
+  &:hover {
+    background: #efefef;
+  }
+
+  & .symbol {
+    &__data {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      & .company-name {
+        color: #673ab7;
+      }
+
+      & .change {
+        color: ${props => (props.symbolUp ? '#1ecd93' : '#ff333a')};
+        margin-top: 4px;
+      }
+
+      &--stats {
+        display: flex;
+        align-items: center;
+        margin-top: 8px;
+
+        &-price {
+          width: 100%;
+        }
+      }
+    }
+
+    &__chart {
+      margin-left: 16px;
+    }
+  }
+`
+
 export const ListBox = styled.div`
-  max-width: 212px;
   background: #e1e2e1;
   border-radius: 2px;
-  padding: 16px;
   margin-right: 16px;
+  min-width: 200px;
+  padding: 16px;
+
+  & .wishlist {
+    cursor: pointer;
+
+    &:not(:last-child) {
+      margin-bottom: 16px;
+    }
+  }
 `
 
 export const DetailBox = styled.div`
@@ -91,7 +142,7 @@ export const DetailBox = styled.div`
     &__chart {
       min-height: 180px;
       flex: 1;
-      background: #e1e2e1;
+      background: #efefef;
       border-radius: 2px;
       padding: 16px;
       margin-left: 16px;

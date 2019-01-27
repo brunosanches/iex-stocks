@@ -172,8 +172,6 @@ export function* getSymbol (action) {
       // Generates "error" object to be validate
       symbol = { ...symbol, error: isError }
 
-      console.log(symbol)
-
       // call reducer addSymbol
       yield put(SymbolsActions.addSymbol(symbol))
     }
@@ -252,51 +250,47 @@ export function* getSymbol (action) {
 
 export function* getSymbolsMarquee (action) {
   try {
-    /* let symbols = yield JSON.parse(
-      localStorage.getItem('@IEXStocks:symbolsMarquee')
-    ) || []
-
-    if (symbols.length === 0) {
-      // Call API iextrading
-      const { data } = yield call(
-        api.get,
-        `stock/market/collection/list?collectionName=infocus&range=1`
-      )
-
-      symbols = {
-        date: moment().format('MMDDYYYY'),
-        data
-      }
-    } else {
-      if (symbols.date !== moment().format('MMDDYYYY')) {
-        // Call API iextrading
-        const { data } = yield call(
-          api.get,
-          `stock/market/collection/list?collectionName=infocus&range=1`
-        )
-
-        symbols = {
-          date: moment().format('MMDDYYYY'),
-          data
-        }
-      }
-    }
-
-    localStorage.setItem('@IEXStocks:symbolsMarquee', JSON.stringify(symbols)) */
-
     // Call API iextrading
     const { data } = yield call(
       api.get,
       `stock/market/collection/list?collectionName=infocus&range=1`
     )
 
-    const symbols = {
-      date: moment().format('MMDDYYYY'),
-      data
-    }
+    let symbols = []
+    data.map(symbol => {
+      symbols.push({
+        quote: {
+          latestPrice: symbol.latestPrice,
+          change: symbol.change && symbol.change.toFixed(2),
+          changePercent:
+            symbol.changePercent && (symbol.changePercent * 100).toFixed(2)
+        },
+        company: {
+          symbol: symbol.symbol,
+          companyName: symbol.companyName,
+          exchange: symbol.primaryExchange
+        }
+      })
+
+      return symbols
+    })
 
     yield put(SymbolsActions.addSymbolsMarquee(symbols))
   } catch (error) {
     console.error(error)
   }
 }
+
+/* symbols.push({
+  quote: {
+    latestPrice: symbol.latestPrice,
+    change: symbol.change && symbol.change.toFixed(2),
+    changePercent:
+      symbol.changePercent && (symbol.changePercent * 100).toFixed(2)
+  },
+  company: {
+    symbol: symbol.symbol,
+    companyName: symbol.companyName,
+    exchange: symbol.primaryExchange
+  }
+} */

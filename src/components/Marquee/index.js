@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 import { MarqueeBox, MarqueeChild } from './styles'
 import { Creators as SymbolsActions } from '../../store/ducks/symbols'
+import Simple from '../Symbol/simple'
 
 const SLIDE_TO_SHOW = 8
 const WIDTH = 180
@@ -14,7 +15,7 @@ const tl = new TimelineMax({
 
 class Marquee extends Component {
   componentDidMount () {
-    const symbolsMarquee = this.props.symbols.symbolsMarquee.data
+    const symbolsMarquee = this.props.symbols.symbolsMarquee
     const { content } = this.refs
 
     tl.add(
@@ -29,6 +30,7 @@ class Marquee extends Component {
         }
       )
     )
+
     tl.add(
       TweenLite.to(content, 0, {
         transform: `translate3d(0, 0, 0)`
@@ -42,7 +44,7 @@ class Marquee extends Component {
       <MarqueeBox>
         <MarqueeChild
           style={{
-            width: `${(symbolsMarquee.data.length + SLIDE_TO_SHOW) * WIDTH}px`
+            width: `${(symbolsMarquee.length + SLIDE_TO_SHOW) * WIDTH}px`
           }}
           ref="content"
           onMouseEnter={() => {
@@ -52,21 +54,43 @@ class Marquee extends Component {
             tl.play()
           }}
         >
-          {symbolsMarquee.data.map((item, index) => {
-            return (
-              <img
-                src={`http://via.placeholder.com/180x55?text=${item.symbol}`}
-                key={index + 1}
+          {symbolsMarquee.map((symbol, idx) => (
+            <div
+              key={idx}
+              className="marquee-child__box"
+              data-symbol={symbol.company.symbol}
+              onClick={e =>
+                this.props.getSymbol(e.currentTarget.dataset.symbol)
+              }
+            >
+              <Simple
+                key={symbol.company.symbol}
+                symbol={symbol.company.symbol}
+                latestPrice={symbol.quote.latestPrice}
+                change={symbol.quote.change}
+                changePercent={symbol.quote.changePercent}
               />
-            )
-          })}
-          {symbolsMarquee.data.map((item, index) => {
-            if (index + 1 <= SLIDE_TO_SHOW) {
+            </div>
+          ))}
+          {symbolsMarquee.map((symbol, idx) => {
+            if (idx + 1 <= SLIDE_TO_SHOW) {
               return (
-                <img
-                  src={`http://via.placeholder.com/180x55?text=${item.symbol}`}
-                  key={`last-${index + 1}`}
-                />
+                <div
+                  key={idx}
+                  className="marquee-child__box"
+                  data-symbol={symbol.company.symbol}
+                  onClick={e =>
+                    this.props.getSymbol(e.currentTarget.dataset.symbol)
+                  }
+                >
+                  <Simple
+                    key={symbol.symbol}
+                    symbol={symbol.symbol}
+                    latestPrice={symbol.quote.latestPrice}
+                    change={symbol.quote.change}
+                    changePercent={symbol.quote.changePercent}
+                  />
+                </div>
               )
             }
             return null
