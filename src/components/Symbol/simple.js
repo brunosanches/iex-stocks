@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { SimpleBox } from './styles'
 
@@ -17,5 +18,12 @@ const Simple = ({ symbol, latestPrice, change, changePercent }) => (
     </div>
   </SimpleBox>
 )
+
+Simple.propTypes = {
+  symbol: PropTypes.string,
+  latestPrice: PropTypes.number,
+  change: PropTypes.string,
+  changePercent: PropTypes.string
+}
 
 export default Simple

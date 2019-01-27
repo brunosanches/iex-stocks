@@ -134,6 +134,7 @@ export const DetailBox = styled.div`
           font-size: 18px;
           font-weight: 400;
           flex: 1;
+          font-weight: 700;
 
           &__change-percent {
             margin-left: 5px;
