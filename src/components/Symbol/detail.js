@@ -8,8 +8,10 @@ import News from './detail-news'
 
 const SymbolDetail = ({ symbol }) => (
   <DetailBox symbolUp={Math.sign(symbol.quote.change) > -1}>
-    <Data symbol={symbol} />
-    <Chart symbol={symbol} />
+    <div className="symbol">
+      <Data />
+      <Chart symbol={symbol} />
+    </div>
     <News symbol={symbol} />
   </DetailBox>
 )

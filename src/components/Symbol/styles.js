@@ -47,7 +47,7 @@ export const ListBox = styled.div`
   background: #e1e2e1;
   border-radius: 2px;
   margin-right: 16px;
-  min-width: 200px;
+  min-width: 140px;
   padding: 16px;
 
   & .wishlist {
@@ -79,6 +79,9 @@ export const DetailBox = styled.div`
   }
 
   & .symbol {
+    flex: 1;
+    display: flex;
+
     &__data {
       flex-basis: 33%;
       min-width: 320px;
@@ -88,18 +91,17 @@ export const DetailBox = styled.div`
         margin-bottom: 8px;
       }
 
-      .add-wishlist {
+      .btn-wishlist {
         cursor: pointer;
         border: 1px solid #673ab7;
         background: transparent;
         border-radius: 3px;
-        position: absolute;
-        right: 0;
-        top: 61px;
         padding: 5px 10px;
         font-size: 12px;
         color: #673ab7;
         font-weight: 700;
+        margin-top: 8px;
+        width: 100%;
 
         &:hover {
           background: #673ab7;

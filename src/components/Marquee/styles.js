@@ -22,7 +22,7 @@ export const MarqueeChild = styled.div`
 
   .marquee-child__box {
     display: inline-block;
-    width: 180px;
+    width: 140px;
     margin-right: 16px;
     padding-top: 16px;
     cursor: pointer;

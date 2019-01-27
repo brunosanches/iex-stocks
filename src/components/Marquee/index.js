@@ -8,7 +8,7 @@ import { Creators as SymbolsActions } from '../../store/ducks/symbols'
 import Simple from '../Symbol/simple'
 
 const SLIDE_TO_SHOW = 8
-const WIDTH = 180
+const WIDTH = 140
 const tl = new TimelineMax({
   repeat: -1
 })
