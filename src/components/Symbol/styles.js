@@ -1,17 +1,17 @@
 import styled from 'styled-components'
 
 export const ListBox = styled.div`
-  width: 220px;
+  max-width: 212px;
   background: #e1e2e1;
   border-radius: 2px;
   padding: 16px;
+  margin-right: 16px;
 `
 
 export const DetailBox = styled.div`
   position: relative;
   background: #f5f5f6;
   border-radius: 2px;
-  margin-left: 16px;
   padding: 32px 16px 16px;
   flex: 1;
   display: flex;

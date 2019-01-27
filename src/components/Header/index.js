@@ -5,52 +5,18 @@ import { connect } from 'react-redux'
 import { Creators as SymbolsActions } from '../../store/ducks/symbols'
 
 import { Container } from '../../pages/main/styles'
-import { HeaderBox, Form } from './styles'
+import { HeaderBox } from './styles'
+import Autocomplete from '../Autocomplete'
+import Marquee from '../Marquee'
 
 class Header extends Component {
-  state = {
-    symbolInput: ''
-  }
-
-  handleSubmit = e => {
-    e.preventDefault()
-
-    if (this.state.symbolInput !== '') {
-      this.props.request(this.state.symbolInput)
-
-      this.setState({ symbolInput: '' })
-    }
-  }
-
   render () {
     return (
       <HeaderBox>
-        <div className="header__content">
-          <Form action="submit" onSubmit={this.handleSubmit}>
-            <input
-              type="text"
-              name="search"
-              value={this.state.symbolInput}
-              placeholder="Search for symbols"
-              onChange={e => this.setState({ symbolInput: e.target.value })}
-            />
-            <button type="submit">X</button>
-          </Form>
-          <h1>IEX Stocks</h1>
-        </div>
-
-        <div className="header__symbols">
-          <Container>
-            <ul>
-              <li>1</li>
-              <li>2</li>
-              <li>3</li>
-              <li>4</li>
-              <li>5</li>
-              <li>6</li>
-            </ul>
-          </Container>
-        </div>
+        {this.props.symbols.symbolsEligible ? <Autocomplete /> : null}
+        <Container>
+          {this.props.symbols.symbolsMarquee.data ? <Marquee /> : null}
+        </Container>
       </HeaderBox>
     )
   }
