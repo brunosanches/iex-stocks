@@ -5,7 +5,7 @@
 Projeto:
 
 ```sh
-$ git clone http://git.estaminas.com.br/root/uai.git
+$ git clone https://github.com/brunosanches/iex-stocks
 ```
 
 Instalar dependências:
