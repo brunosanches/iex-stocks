@@ -17,6 +17,8 @@ export const Types = {
  * Reducers
  */
 const INITIAL_STATE = {
+  loading: false,
+  error: null,
   wishlist: JSON.parse(localStorage.getItem('@IEXStocks:wishlist')) || [],
   symbolsEligible: {},
   symbolsMarquee: {},
@@ -26,7 +28,7 @@ const INITIAL_STATE = {
 export default function symbols (state = INITIAL_STATE, action) {
   switch (action.type) {
     case Types.GET_SYMBOL:
-      return { ...state }
+      return { ...state, error: null, loading: true }
 
     case Types.ADD_SYMBOL:
       let wishlist = state.wishlist
@@ -55,6 +57,8 @@ export default function symbols (state = INITIAL_STATE, action) {
       return {
         ...state,
         symbol: action.payload.symbol,
+        loading: false,
+        error: null,
         wishlist
       }
 
@@ -106,6 +110,9 @@ export default function symbols (state = INITIAL_STATE, action) {
         ...state,
         wishlist: removeSymbolWishlist
       }
+
+    case Types.ADD_FAILURE:
+      return { ...state, loading: false, error: action.payload.error.message }
     default:
       return state
   }
@@ -151,5 +158,10 @@ export const Creators = {
   removeWishList: symbol => ({
     type: Types.REMOVE_WISHLIST,
     payload: { symbol }
+  }),
+
+  addFailure: error => ({
+    type: Types.ADD_FAILURE,
+    payload: { error }
   })
 }

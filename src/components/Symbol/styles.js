@@ -50,6 +50,10 @@ export const ListBox = styled.div`
   min-width: 140px;
   padding: 16px;
 
+  @media (max-width: 768px) {
+    display: none;
+  }
+
   & .wishlist {
     cursor: pointer;
 
@@ -82,10 +86,19 @@ export const DetailBox = styled.div`
     flex: 1;
     display: flex;
 
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
+
     &__data {
       flex-basis: 33%;
       min-width: 320px;
       position: relative;
+
+      @media (max-width: 767px) {
+        flex-basis: 100%;
+        min-width: 100%;
+      }
 
       & p {
         margin-bottom: 8px;
@@ -102,6 +115,10 @@ export const DetailBox = styled.div`
         font-weight: 700;
         margin-top: 8px;
         width: 100%;
+
+        @media (max-width: 768px) {
+          display: none;
+        }
 
         &:hover {
           background: #673ab7;
@@ -176,6 +193,11 @@ export const DetailBox = styled.div`
       padding-top: 16px;
       padding-right: 16px;
       margin-left: 16px;
+
+      @media (max-width: 768px) {
+        margin-left: 0;
+        margin-top: 16px;
+      }
 
       .error {
       }

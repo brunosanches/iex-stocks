@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 
 import { Creators as SymbolsActions } from '../../store/ducks/symbols'
 
+import Loading from '../Loading'
+
 class Data extends Component {
   static propTypes = {
     addWishList: PropTypes.func,
@@ -69,10 +71,11 @@ class Data extends Component {
 
   render () {
     const {
-      symbols: { symbol, wishlist }
+      symbols: { symbol, wishlist, loading }
     } = this.props
     return (
       <Fragment>
+        {loading ? <Loading /> : null}
         <div className="symbol__data">
           <p className="symbol__data--company-name">
             {symbol.company.companyName} ({symbol.company.symbol})

@@ -11,6 +11,24 @@ export const MarqueeBox = styled.div`
   margin: 0 auto;
   max-width: 1334px;
   height: 82px;
+
+  @media (min-width: 1280px) and (max-width: 1365px) {
+    max-width: 1248px;
+  }
+
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    max-width: 992px;
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    max-width: 736px;
+  }
+
+  @media (max-width: 767px) {
+    max-width: 100%;
+    margin-right: 0;
+    margin-left: 0;
+  }
 `
 export const MarqueeChild = styled.div`
   position: absolute;

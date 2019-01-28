@@ -34,7 +34,13 @@ export function* getSymbolsSupport (action) {
     localStorage.setItem('@IEXStocks:symbolsEligible', JSON.stringify(symbols))
     yield put(SymbolsActions.addSymbolsSupport(symbols))
   } catch (error) {
-    console.error(error)
+    let isError = {
+      orign: 'quote',
+      status: true,
+      message: `Não foi possível obter lista de symbols.`
+    }
+
+    yield put(SymbolsActions.addFailure(isError))
   }
 }
 
@@ -166,7 +172,15 @@ export function* getSymbol (action) {
       yield put(SymbolsActions.addSymbol(symbol))
     }
   } catch (error) {
-    console.error(error)
+    let isError = {
+      orign: 'quote',
+      status: true,
+      message: `Não foi possível obter informações do symbol (${
+        action.payload.symbolSearch
+      }).`
+    }
+
+    yield put(SymbolsActions.addFailure(isError))
   }
 }
 
@@ -199,6 +213,12 @@ export function* getSymbolsMarquee (action) {
 
     yield put(SymbolsActions.addSymbolsMarquee(symbols))
   } catch (error) {
-    console.error(error)
+    let isError = {
+      orign: 'quote',
+      status: true,
+      message: `Não foi possível obter coleção de simbolos.`
+    }
+
+    yield put(SymbolsActions.addFailure(isError))
   }
 }

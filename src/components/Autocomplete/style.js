@@ -62,6 +62,10 @@ export const Form = styled.form`
     padding: 0 15px;
     min-width: 280px;
     outline: none;
+
+    @media (max-width: 1024px) {
+      min-width: 180px;
+    }
   }
 
   & button {
