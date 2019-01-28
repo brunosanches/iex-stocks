@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 const News = ({ symbol }) => (
   <Fragment>
     <div className="symbol__news">
-      {console.log(symbol)}
       <h2>Last News</h2>
       {symbol.news.map((notice, idx) => (
         <a
