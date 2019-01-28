@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const AutocompleteBox = styled.div`
   .no-suggestions {
-    color: #999;
+    color: #673ab7;
     padding: 0.5rem;
     position: absolute;
     top: 33px;
@@ -10,6 +10,7 @@ export const AutocompleteBox = styled.div`
     background: #fff;
     width: 357px;
     border: 1px solid #673ab7;
+    font-weight: 700;
   }
 
   .suggestions {
@@ -20,13 +21,14 @@ export const AutocompleteBox = styled.div`
     list-style: none;
     margin-top: 0;
     width: 100%;
-    max-height: 220px;
+    max-height: 240px;
     overflow-y: auto;
     padding-left: 0;
     position: absolute;
     z-index: 1;
-    background: #fff;
+    background: #f5f5f5;
     top: 33px;
+    font-size: 14px;
   }
 
   .suggestions li {
@@ -43,7 +45,7 @@ export const AutocompleteBox = styled.div`
   }
 
   .suggestions li:not(:last-of-type) {
-    border-bottom: 1px solid #999;
+    border-bottom: 1px solid #673ab7;
   }
 `
 
@@ -61,6 +63,10 @@ export const Form = styled.form`
     padding: 0 15px;
     min-width: 280px;
     outline: none;
+
+    @media (max-width: 1024px) {
+      min-width: 180px;
+    }
   }
 
   & button {

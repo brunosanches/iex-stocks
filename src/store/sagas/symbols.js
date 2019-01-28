@@ -34,7 +34,15 @@ export function* getSymbolsSupport (action) {
     localStorage.setItem('@IEXStocks:symbolsEligible', JSON.stringify(symbols))
     yield put(SymbolsActions.addSymbolsSupport(symbols))
   } catch (error) {
-    console.error(error)
+    let isError = {
+      orign: 'quote',
+      status: true,
+      message: `Não foi possível obter lista de symbols.`
+    }
+
+    console.log(`getSymbolsSupport: ${isError.message}`)
+
+    yield put(SymbolsActions.addFailure(isError))
   }
 }
 
@@ -105,25 +113,15 @@ export function* getSymbol (action) {
         }
       } else {
         // data used in the graph
-        let chartsData = ''
-        chart = data.chart.map(chart => {
-          if (
+        chart = data.chart.filter(chart => {
+          return (
             chart.label &&
-            chart.high &&
-            chart.low &&
-            chart.open &&
-            chart.close
-          ) {
-            chartsData = {
-              label: chart.label,
-              high: chart.high.toFixed(2),
-              low: chart.low.toFixed(2),
-              open: chart.open.toFixed(2),
-              close: chart.close.toFixed(2)
-            }
-          }
-
-          return chartsData
+            chart.label !== '' &&
+            (chart.high && chart.high !== '') &&
+            (chart.low && chart.low !== '') &&
+            (chart.open && chart.open !== '') &&
+            (chart.close && chart.close !== '')
+          )
         })
       }
 
@@ -172,131 +170,61 @@ export function* getSymbol (action) {
       // Generates "error" object to be validate
       symbol = { ...symbol, error: isError }
 
-      console.log(symbol)
-
       // call reducer addSymbol
       yield put(SymbolsActions.addSymbol(symbol))
     }
-
-    // Get all 'label' symbol equals 0
-    /* let symbolsChartTime = []
-    data.chart.map(chart => {
-      if (moment(chart.minute, 'HH:mm').minutes() === 0) {
-        symbolsChartTime.push(chart.label)
-      }
-
-      // reduce uniques symbols 'label' to put in XAxis graphics
-      return [...new Set(symbolsChartTime.map(time => time))]
-    })
-
-    // Get all 'close' symbol different null
-    let symbolsChartClose = data.chart.filter(
-      (value, index, self) =>
-        data.chart[self.indexOf(value)].close === data.chart[index].close &&
-        data.chart[index].close &&
-        data.chart[index].close !== null
-    )
-
-    // get unique symbols "close" to put in YAxis graphics
-    symbolsChartClose = [
-      ...new Set(symbolsChartClose.map(chart => chart.close.toFixed(2)))
-    ].sort()
-
-    // Data used in the graph
-    let chartsData = ''
-    const chart = data.chart.map(chart => {
-      if (chart.label && chart.high && chart.low && chart.open && chart.close) {
-        chartsData = {
-          label: chart.label,
-          high: chart.high.toFixed(2),
-          low: chart.low.toFixed(2),
-          open: chart.open.toFixed(2),
-          close: chart.close.toFixed(2)
-        }
-      }
-
-      return chartsData
-    })
-
-    // Generates object with all symbol data
-    const symbol = {
-      quote: {
-        latestPrice: data.quote.latestPrice,
-        change: data.quote.change.toFixed(2),
-        changePercent: data.quote.changePercent, // Caucular porcentagem com duas casas
-        latestTime: data.quote.latestTime, // Formatar
-        open: data.quote.open.toFixed(2),
-        close: data.quote.close.toFixed(2),
-        high: data.quote.high.toFixed(2),
-        low: data.quote.low.toFixed(2),
-        peRatio: data.quote.peRatio.toFixed(2),
-        symbolsChartClose,
-        symbolsChartTime
-      },
-      company: {
-        symbol: data.company.symbol,
-        companyName: data.company.companyName,
-        exchange: data.company.exchange,
-        website: data.company.website
-      },
-      news: data.news,
-      chart
+  } catch (error) {
+    let isError = {
+      orign: 'quote',
+      status: true,
+      message: `Não foi possível obter informações do symbol (${
+        action.payload.symbolSearch
+      }).`
     }
 
-    // call reducer addSymbol
-    yield put(SymbolsActions.addSymbol(symbol)) */
-  } catch (error) {
-    console.error(error)
+    console.log(`getSymbol: ${isError.message}`)
+
+    yield put(SymbolsActions.addFailure(isError))
   }
 }
 
 export function* getSymbolsMarquee (action) {
   try {
-    /* let symbols = yield JSON.parse(
-      localStorage.getItem('@IEXStocks:symbolsMarquee')
-    ) || []
-
-    if (symbols.length === 0) {
-      // Call API iextrading
-      const { data } = yield call(
-        api.get,
-        `stock/market/collection/list?collectionName=infocus&range=1`
-      )
-
-      symbols = {
-        date: moment().format('MMDDYYYY'),
-        data
-      }
-    } else {
-      if (symbols.date !== moment().format('MMDDYYYY')) {
-        // Call API iextrading
-        const { data } = yield call(
-          api.get,
-          `stock/market/collection/list?collectionName=infocus&range=1`
-        )
-
-        symbols = {
-          date: moment().format('MMDDYYYY'),
-          data
-        }
-      }
-    }
-
-    localStorage.setItem('@IEXStocks:symbolsMarquee', JSON.stringify(symbols)) */
-
     // Call API iextrading
     const { data } = yield call(
       api.get,
       `stock/market/collection/list?collectionName=infocus&range=1`
     )
 
-    const symbols = {
-      date: moment().format('MMDDYYYY'),
-      data
-    }
+    let symbols = []
+    data.map(symbol => {
+      symbols.push({
+        quote: {
+          latestPrice: symbol.latestPrice,
+          change: symbol.change && symbol.change.toFixed(2),
+          changePercent:
+            symbol.changePercent && (symbol.changePercent * 100).toFixed(2)
+        },
+        company: {
+          symbol: symbol.symbol,
+          companyName: symbol.companyName,
+          exchange: symbol.primaryExchange
+        }
+      })
+
+      return symbols
+    })
 
     yield put(SymbolsActions.addSymbolsMarquee(symbols))
   } catch (error) {
-    console.error(error)
+    let isError = {
+      orign: 'quote',
+      status: true,
+      message: `Não foi possível obter coleção de simbolos.`
+    }
+
+    console.log(`addSymbolsMarquee: ${isError.message}`)
+
+    yield put(SymbolsActions.addFailure(isError))
   }
 }

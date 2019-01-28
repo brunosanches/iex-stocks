@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 import { Creators as SymbolsActions } from '../../store/ducks/symbols'
 import { AutocompleteBox, Form } from './style'
@@ -19,7 +21,62 @@ class Autocomplete extends Component {
   }
 
   static propTypes = {
-    suggestions: PropTypes.instanceOf(Array)
+    getSymbol: PropTypes.func,
+    symbols: PropTypes.shape({
+      symbol: PropTypes.shape({
+        chart: PropTypes.shape({
+          data: PropTypes.arrayOf(
+            PropTypes.shape({
+              average: PropTypes.number,
+              changeOverTime: PropTypes.number,
+              close: PropTypes.number,
+              date: PropTypes.date,
+              high: PropTypes.number,
+              label: PropTypes.string,
+              low: PropTypes.number,
+              marketAverage: PropTypes.number,
+              marketChangeOverTime: PropTypes.number,
+              marketClose: PropTypes.number,
+              marketHigh: PropTypes.number,
+              marketLow: PropTypes.number,
+              marketNotional: PropTypes.number,
+              marketNumberOfTrades: PropTypes.number,
+              marketOpen: PropTypes.number,
+              marketVolume: PropTypes.number,
+              minute: PropTypes.string,
+              notional: PropTypes.number,
+              numberOfTrades: PropTypes.number,
+              open: PropTypes.number,
+              volume: PropTypes.number
+            })
+          ),
+          symbolsChartClose: PropTypes.array,
+          symbolsChartTime: PropTypes.array
+        }),
+        company: PropTypes.shape({
+          companyName: PropTypes.string,
+          exchange: PropTypes.string,
+          symbol: PropTypes.string,
+          website: PropTypes.string
+        }),
+        quote: PropTypes.shape({
+          change: PropTypes.string,
+          changePercent: PropTypes.string,
+          close: PropTypes.string,
+          high: PropTypes.string,
+          latestPrice: PropTypes.number,
+          latestTime: PropTypes.string,
+          low: PropTypes.string,
+          open: PropTypes.string,
+          peRatio: PropTypes.string
+        }),
+        error: PropTypes.shape({
+          message: PropTypes.string,
+          orign: PropTypes.string,
+          status: PropTypes.bool
+        })
+      })
+    })
   }
 
   static defaultProps = {
@@ -38,7 +95,6 @@ class Autocomplete extends Component {
 
   onChange = e => {
     const { symbolsEligible } = this.props.symbols
-    // const suggestions = Array.from(symbolsEligible).map(data => data.symbol)
     const symbolInput = e.currentTarget.value
     const filteredSuggestions = Array.from(symbolsEligible).filter(
       data => data.symbol.toLowerCase().indexOf(symbolInput.toLowerCase()) > -1
@@ -66,10 +122,15 @@ class Autocomplete extends Component {
 
     // User pressed the enter key
     if (e.keyCode === 13) {
+      let selectInput =
+        filteredSuggestions[activeSuggestion] === undefined
+          ? this.state.symbolInput
+          : filteredSuggestions[activeSuggestion].symbol
+
       this.setState({
         activeSuggestion: 0,
         showSuggestions: false,
-        symbolInput: filteredSuggestions[activeSuggestion].symbol
+        symbolInput: selectInput
       })
     } else if (e.keyCode === 38) {
       // User pressed the up arrow
@@ -88,11 +149,17 @@ class Autocomplete extends Component {
     }
   }
 
+  notify = message => {
+    console.log(message)
+    toast.error(message)
+  }
+
   render () {
     const {
       onChange,
       onClick,
       onKeyDown,
+      notify,
       state: {
         activeSuggestion,
         filteredSuggestions,
@@ -100,6 +167,13 @@ class Autocomplete extends Component {
         symbolInput
       }
     } = this
+
+    const { symbols } = this.props
+
+    console.log(`Loading: ${symbols.loading} - Error: ${symbols.error}`)
+    if (symbols.error) {
+      notify(symbols.error)
+    }
 
     let suggestionsListComponent
 
@@ -139,6 +213,7 @@ class Autocomplete extends Component {
 
     return (
       <AutocompleteBox>
+        <ToastContainer />
         <div className="header__content">
           <Form action="submit" onSubmit={this.handleSubmit}>
             <input
