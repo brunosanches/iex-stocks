@@ -40,6 +40,8 @@ export function* getSymbolsSupport (action) {
       message: `Não foi possível obter lista de symbols.`
     }
 
+    console.log(`getSymbolsSupport: ${isError.message}`)
+
     yield put(SymbolsActions.addFailure(isError))
   }
 }
@@ -180,6 +182,8 @@ export function* getSymbol (action) {
       }).`
     }
 
+    console.log(`getSymbol: ${isError.message}`)
+
     yield put(SymbolsActions.addFailure(isError))
   }
 }
@@ -218,6 +222,8 @@ export function* getSymbolsMarquee (action) {
       status: true,
       message: `Não foi possível obter coleção de simbolos.`
     }
+
+    console.log(`addSymbolsMarquee: ${isError.message}`)
 
     yield put(SymbolsActions.addFailure(isError))
   }

@@ -112,6 +112,8 @@ export default function symbols (state = INITIAL_STATE, action) {
       }
 
     case Types.ADD_FAILURE:
+      console.log(`Reducer: ${action.payload.error.message}`)
+
       return { ...state, loading: false, error: action.payload.error.message }
     default:
       return state

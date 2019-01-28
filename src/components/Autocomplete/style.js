@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const AutocompleteBox = styled.div`
   .no-suggestions {
-    color: #999;
+    color: #673ab7;
     padding: 0.5rem;
     position: absolute;
     top: 33px;
@@ -10,6 +10,7 @@ export const AutocompleteBox = styled.div`
     background: #fff;
     width: 357px;
     border: 1px solid #673ab7;
+    font-weight: 700;
   }
 
   .suggestions {

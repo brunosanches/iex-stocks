@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import { Container } from './styles'
 import { Creators as SymbolsAction } from '../../store/ducks/symbols'
 
+import Loading from '../../components/Loading'
 import Header from '../../components/Header'
 import Wishlist from '../../components/Symbol/wishlist'
 import SymbolDetail from '../../components/Symbol/detail'
@@ -84,6 +85,7 @@ class Main extends Component {
       <Fragment>
         <Header />
         <Container>
+          {symbols.loading ? <Loading /> : null}
           {Array.from(symbols.wishlist).length > 0 ? (
             <Wishlist wishlist={symbols.wishlist} />
           ) : null}

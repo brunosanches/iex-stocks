@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 import { Creators as SymbolsActions } from '../../store/ducks/symbols'
 import { AutocompleteBox, Form } from './style'
@@ -147,11 +149,17 @@ class Autocomplete extends Component {
     }
   }
 
+  notify = message => {
+    console.log(message)
+    toast.error(message)
+  }
+
   render () {
     const {
       onChange,
       onClick,
       onKeyDown,
+      notify,
       state: {
         activeSuggestion,
         filteredSuggestions,
@@ -159,6 +167,14 @@ class Autocomplete extends Component {
         symbolInput
       }
     } = this
+
+    const { symbols } = this.props
+
+    console.log(`Loading: ${symbols.loading} - Error: ${symbols.error}`)
+    if (symbols.error) {
+      notify(symbols.error)
+    }
+
     let suggestionsListComponent
 
     if (showSuggestions && symbolInput) {
@@ -197,6 +213,7 @@ class Autocomplete extends Component {
 
     return (
       <AutocompleteBox>
+        <ToastContainer />
         <div className="header__content">
           <Form action="submit" onSubmit={this.handleSubmit}>
             <input
