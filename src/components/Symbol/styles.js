@@ -224,6 +224,21 @@ export const DetailBox = styled.div`
     &__news {
       margin-top: 24px;
       flex-basis: 100%;
+
+      & a {
+        font-size: 16px;
+        display: block;
+        text-decoration: none;
+        font-weight: 700;
+        padding: 4px 0;
+        color: #673ab7;
+      }
+
+      & h2 {
+        font-weight: 700;
+        font-size: 22px;
+        margin-bottom: 16px;
+      }
     }
   }
 `

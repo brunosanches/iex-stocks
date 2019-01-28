@@ -4,8 +4,17 @@ import PropTypes from 'prop-types'
 const News = ({ symbol }) => (
   <Fragment>
     <div className="symbol__news">
+      {console.log(symbol)}
+      <h2>Last News</h2>
       {symbol.news.map((notice, idx) => (
-        <p key={idx}>{notice.headline}</p>
+        <a
+          key={idx}
+          href={notice.url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {notice.headline}
+        </a>
       ))}
     </div>
   </Fragment>
