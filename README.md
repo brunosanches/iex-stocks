@@ -15,6 +15,12 @@ $ cd iex-stocks
 $ yarn install
 ```
 
+Rodar o projeto:
+
+```sh
+$ yarn start
+```
+
 #### Para gerar arquivos de produção:
 
 ```sh
